@@ -106,12 +106,12 @@
     $(document).ready(function(){
         $("button.LearnMore").click(function(){
             if (display == 0){
-                $("div.reveal").slideDown("slow", "swing");
+                $("div.reveal").slideDown("fast", "swing");
                 display = 1
             }
 
             else if (display == 1){
-                $("div.reveal").slideUp("slow", "swing");
+                $("div.reveal").slideUp("fast", "swing");
                 display = 0
             }
         });
