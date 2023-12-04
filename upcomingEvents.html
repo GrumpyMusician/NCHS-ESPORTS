@@ -5,7 +5,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400&display=swap" rel="stylesheet">
-
 <style>
     /*First part of style is not needed for the main page, given that the main page already has style*/
     html{
@@ -106,12 +105,12 @@
     $(document).ready(function(){
         $("button.LearnMore").click(function(){
             if (display == 0){
-                $("div.reveal").slideDown("fast", "swing");
+                $("div.reveal").slideDown("slow", "swing");
                 display = 1
             }
 
             else if (display == 1){
-                $("div.reveal").slideUp("fast", "swing");
+                $("div.reveal").slideUp("slow", "swing");
                 display = 0
             }
         });
