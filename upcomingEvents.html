@@ -32,7 +32,13 @@
     div.heading {
         padding-left: 15px;
         padding-top: 3px;
+        padding-right: 15px;
         color: rgb(197, 0, 0);
+    }
+
+    hr.horizLine {
+        width: 93%;
+        border-color: red;
     }
 
     div.content {
@@ -48,7 +54,7 @@
         padding-top: 10px;
         padding-bottom: 10px;
 
-        background-color: rgba(255, 255, 255, 0.5);
+        background-color: rgba(255, 168, 168, 0.2);
 
         display: none;
     }
@@ -77,17 +83,14 @@
     }
 </style>
 
-
-
-
 <div class = "eventsBox">
     <div class = "upcomingEvents">
         <div class = "heading">
-            <h1>Esports Event</h1>
+            <h1>Introduction</h1>
             <h5 style = "font-weight: 300;">12/03/2023</h5>
         </div>
 
-        <hr style = "width: 92%">
+        <hr class = "horizLine">
 
         <div class = "content">
             Here you say stuff about the event, but keep it short!
@@ -104,25 +107,23 @@
         </div>
 
     </div>
-
 </div>
-
 <div class = "eventsBox">
     <div class = "upcomingEvents">
         <div class = "heading">
-            <h1>Esports Event</h1>
-            <h5 style = "font-weight: 300;">12/03/2023</h5>
+            <h1>Second Event? Whaaat?</h1>
+            <h5 style = "font-weight: 300;">12/04/2023</h5>
         </div>
 
-        <hr style = "width: 92%">
+        <hr class = "horizLine">
 
         <div class = "content">
-            Here you say stuff about the event, but keep it short!
+            That's right! You can copy and paste these div elements, and they will all be different!
         </div>
 
         <div class = "reveal">
             <div class = "content">
-                Hey! You clicked the Learn More button! In here is all the things that you want to go more into detail on, maybe even an image or two? There are no limitations on what you can put in this!
+                Everything's different!!! You can keep copy and paste this code and the whole thing will still work. Isn't coding magical???
             </div>
         </div>
 
@@ -131,28 +132,24 @@
         </div>
 
     </div>
-
 </div>
-
-
 
 
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
-    var display = 0; // 0 --> LearnMore not displayed; 1--> LearnMore displayed
+    // Javascript to slide down a discription when the "Learn More" button is pressed.
+    // IMPORTANT NOTE: If any more elements get added to the events the whole thing will get messed up
     $(document).ready(function(){
         $("button.LearnMore").click(function(){
-            if (display == 0){
-                $("div.reveal").slideDown("slow", "swing");
-                display = 1
+            if ($(this).parent().parent().children().first().next().next().next().is(":visible")){
+                $(this).parent().parent().children().first().next().next().next().slideUp("slow", "swing");
+            }
+            else {
+                $(this).parent().parent().children().first().next().next().next().slideDown("slow", "swing");
             }
 
-            else if (display == 1){
-                $("div.reveal").slideUp("slow", "swing");
-                display = 0
-            }
         });
     });
 </script>
