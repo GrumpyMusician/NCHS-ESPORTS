@@ -9,39 +9,37 @@
     /*First part of style is not needed for the main page, given that the main page already has style*/
     html{
         font-family: 'Ubuntu', sans-serif;
-    }
-
-
-    /*Stuff down here are specific and needed for function*/
-    html {
         background-color: rgb(180, 6, 6);
     }
+
+
+    /*Stuff down here are specific and needed for Current Events*/
 
     div.eventsBox {
         float: left;
         padding: 10px;
     }
 
-    div.upcomingEvents, div.slideDown {
+    div.eventsUpcomingEvents {
         background-color: rgba(255, 255, 255, 0.85);
         width: 400px;
         border-radius: 15px/15px;
         position: relative;
     }
 
-    div.heading {
+    div.eventsHeading {
         padding-left: 15px;
         padding-top: 3px;
         padding-right: 15px;
         color: rgb(197, 0, 0);
     }
 
-    hr.horizLine {
+    hr.eventsHorizLine {
         width: 93%;
         border-color: red;
     }
 
-    div.content {
+    div.eventsContent {
         padding-left: 15px;
         padding-top: 12px;
         padding-right: 15px;
@@ -49,7 +47,7 @@
         color: black;
     }
 
-    div.reveal {
+    div.eventsReveal {
         width: 400px;
         padding-top: 10px;
         padding-bottom: 10px;
@@ -59,11 +57,11 @@
         display: none;
     }
 
-    div.footer {
+    div.eventsFooter {
         padding-top: 50px;
     }
 
-    button.LearnMore {
+    button.eventsLearnMore {
         background-color: rgba(255, 255, 255, 0.7);
         height: 30px;
         width: 100px;
@@ -84,17 +82,12 @@
 </style>
 </head>
 
+
 <body>
-<div class = "htmlAction">
-
-</div>
-
-
+<div class = "htmlAction"></div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
-    //$("div.htmlAction").append("<div class = 'eventsBox'> <div class = 'upcomingEvents'> <div class = 'heading'> <h1>Second Event? Whaaat?</h1> <h5 style = 'font-weight: 300;'>12/04/2023</h5> </div> <hr class = 'horizLine'> <div class = 'content'> That's right! You can copy and paste these div elements, and they will all be different! </div> <div class = 'reveal'> <div class = 'content'> Everything's different!!! You can keep copy and paste this code and the whole thing will still work. Isn't coding magical??? </div> </div> <div class = 'footer'> <button class = 'LearnMore'>Learn More</button> </div> </div> </div>")
-
     // WARNING: This code requires a server. To run it, install the Live Server Extension: https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer
     // If you do not want to install a Live Server, turn off CORS on your browser.
 
@@ -102,8 +95,6 @@
     var date = "";
     var briefDisc = "";
     var detailedDisc = "";
-
-    var count = 1;
 
     jQuery.get('events.txt', function(data) {
         var lines = data.split("\n");
@@ -126,23 +117,21 @@
                     detailedDisc = lineSections[j];
                 }
             });
-            
 
             // Reads the events.txt file, inserts HTML based off of parameters
-            $('div.htmlAction').append("<div class = 'eventsBox'> <div class = 'upcomingEvents'> <div class = 'heading'> <h1>" + heading + "</h1> <h5 style = 'font-weight: 300;'>" + date + "</h5> </div> <hr class = 'horizLine'> <div class = 'content'> " + briefDisc + " </div> <div class = 'reveal'> <div class = 'content'> " + detailedDisc + " </div> </div> <div class = 'footer'> <button class = 'LearnMore'>Learn More</button> </div> </div> </div> ")
+            $('div.htmlAction').append("<div class = 'eventsBox'> <div class = 'eventsUpcomingEvents'> <div class = 'eventsHeading'> <h1>" + heading + "</h1> <h5 style = 'font-weight: 300;'>" + date + "</h5> </div> <hr class = 'eventsHorizLine'> <div class = 'eventsContent'> " + briefDisc + " </div> <div class = 'eventsReveal'> <div class = 'eventsContent'> " + detailedDisc + " </div> </div> <div class = 'eventsFooter'> <button class = 'eventsLearnMore'>Learn More</button> </div> </div> </div> ")
         });
 
         // Javascript to slide down a discription when the "Learn More" button is pressed.
         // IMPORTANT NOTE: If any more elements get added to the events the whole thing will get messed up
         $(document).ready(function(){
-            $("button.LearnMore").click(function(){
+            $("button.eventsLearnMore").click(function(){
                 if ($(this).parent().parent().children().first().next().next().next().is(":visible")){
                     $(this).parent().parent().children().first().next().next().next().slideUp("slow", "swing");
                 }
                 else {
                     $(this).parent().parent().children().first().next().next().next().slideDown("slow", "swing");
                 }
-
             });
         });
 
