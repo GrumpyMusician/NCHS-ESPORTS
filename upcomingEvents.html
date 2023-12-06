@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!-- Not formatted as a proper html document so that this can be stiched with the index later! -->
 
+<head>
 <!-- Font (Not neccessary if main page already has a font)-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -82,74 +82,72 @@
         box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.05),0 17px 50px 0 rgba(0, 0, 0, 0.032);
     }
 </style>
+</head>
 
-<div class = "eventsBox">
-    <div class = "upcomingEvents">
-        <div class = "heading">
-            <h1>Introduction</h1>
-            <h5 style = "font-weight: 300;">12/03/2023</h5>
-        </div>
+<body>
+<div class = "htmlAction">
 
-        <hr class = "horizLine">
-
-        <div class = "content">
-            Here you say stuff about the event, but keep it short!
-        </div>
-
-        <div class = "reveal">
-            <div class = "content">
-                Hey! You clicked the Learn More button! In here is all the things that you want to go more into detail on, maybe even an image or two? There are no limitations on what you can put in this!
-            </div>
-        </div>
-
-        <div class = "footer">
-            <button class = "LearnMore">Learn More</button>
-        </div>
-
-    </div>
 </div>
-<div class = "eventsBox">
-    <div class = "upcomingEvents">
-        <div class = "heading">
-            <h1>Second Event? Whaaat?</h1>
-            <h5 style = "font-weight: 300;">12/04/2023</h5>
-        </div>
-
-        <hr class = "horizLine">
-
-        <div class = "content">
-            That's right! You can copy and paste these div elements, and they will all be different!
-        </div>
-
-        <div class = "reveal">
-            <div class = "content">
-                Everything's different!!! You can keep copy and paste this code and the whole thing will still work. Isn't coding magical???
-            </div>
-        </div>
-
-        <div class = "footer">
-            <button class = "LearnMore">Learn More</button>
-        </div>
-
-    </div>
-</div>
-
 
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
-    // Javascript to slide down a discription when the "Learn More" button is pressed.
-    // IMPORTANT NOTE: If any more elements get added to the events the whole thing will get messed up
-    $(document).ready(function(){
-        $("button.LearnMore").click(function(){
-            if ($(this).parent().parent().children().first().next().next().next().is(":visible")){
-                $(this).parent().parent().children().first().next().next().next().slideUp("slow", "swing");
-            }
-            else {
-                $(this).parent().parent().children().first().next().next().next().slideDown("slow", "swing");
-            }
+    //$("div.htmlAction").append("<div class = 'eventsBox'> <div class = 'upcomingEvents'> <div class = 'heading'> <h1>Second Event? Whaaat?</h1> <h5 style = 'font-weight: 300;'>12/04/2023</h5> </div> <hr class = 'horizLine'> <div class = 'content'> That's right! You can copy and paste these div elements, and they will all be different! </div> <div class = 'reveal'> <div class = 'content'> Everything's different!!! You can keep copy and paste this code and the whole thing will still work. Isn't coding magical??? </div> </div> <div class = 'footer'> <button class = 'LearnMore'>Learn More</button> </div> </div> </div>")
 
+    // WARNING: This code requires a server. To run it, install the Live Server Extension: https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer
+    // If you do not want to install a Live Server, turn off CORS on your browser.
+
+    var heading = "";
+    var date = "";
+    var briefDisc = "";
+    var detailedDisc = "";
+
+    var count = 1;
+
+    jQuery.get('events.txt', function(data) {
+        var lines = data.split("\n");
+        
+        $.each(lines, function (i, elem) {
+            
+            var lineSections = lines[i].toString().split("+--+");
+            
+            $.each(lineSections, function(j, elem) {
+                if (j == 0) {
+                    heading = lineSections[j];
+                }
+                if (j == 1) {
+                    date = lineSections[j];
+                }
+                if (j == 2) {
+                    briefDisc = lineSections[j];
+                }
+                if (j == 3) {
+                    detailedDisc = lineSections[j];
+                }
+            });
+            
+
+            // Reads the events.txt file, inserts HTML based off of parameters
+            $('div.htmlAction').append("<div class = 'eventsBox'> <div class = 'upcomingEvents'> <div class = 'heading'> <h1>" + heading + "</h1> <h5 style = 'font-weight: 300;'>" + date + "</h5> </div> <hr class = 'horizLine'> <div class = 'content'> " + briefDisc + " </div> <div class = 'reveal'> <div class = 'content'> " + detailedDisc + " </div> </div> <div class = 'footer'> <button class = 'LearnMore'>Learn More</button> </div> </div> </div> ")
         });
-    });
+
+        // Javascript to slide down a discription when the "Learn More" button is pressed.
+        // IMPORTANT NOTE: If any more elements get added to the events the whole thing will get messed up
+        $(document).ready(function(){
+            $("button.LearnMore").click(function(){
+                if ($(this).parent().parent().children().first().next().next().next().is(":visible")){
+                    $(this).parent().parent().children().first().next().next().next().slideUp("slow", "swing");
+                }
+                else {
+                    $(this).parent().parent().children().first().next().next().next().slideDown("slow", "swing");
+                }
+
+            });
+        });
+
+    })
+
+ 
 </script>
+</body>
