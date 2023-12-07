@@ -54,6 +54,12 @@
         color: black;
     }
 
+    img.eventsImage {
+        border-radius: 15px/15px;
+        width: 370px;
+        height: auto;
+    }
+
     div.eventsReveal {
         width: 400px;
         padding-top: 10px;
@@ -145,6 +151,7 @@
     var date = "";
     var briefDisc = "";
     var detailedDisc = "";
+    var image = "";
     var numEvents = 0;
 
     jQuery.get('events.txt', function(data) {
@@ -152,7 +159,7 @@
         
         $.each(lines, function (i, elem) {
             
-            var lineSections = lines[i].toString().split("+--+");
+            var lineSections = lines[i].toString().split("~||~");
             
             $.each(lineSections, function(j, elem) {
                 if (j == 0) {
@@ -167,10 +174,14 @@
                 if (j == 3) {
                     detailedDisc = lineSections[j];
                 }
+                if (j == 4) {
+                    image = lineSections[j];
+                    console.log(image);
+                }
             });
 
             // Reads the events.txt file, inserts HTML based off of parameters
-            $('div.eventsHtmlAction').append("<td><div class = 'eventsBox'> <div class = 'eventsUpcomingEvents'> <div class = 'eventsHeading'> <h1>" + heading + "</h1> <h5 style = 'font-weight: 300;'>" + date + "</h5> </div> <hr class = 'eventsHorizLine'> <div class = 'eventsContent'> " + briefDisc + " </div> <div class = 'eventsReveal'> <div class = 'eventsContent'> " + detailedDisc + " </div> </div> <div class = 'eventsFooter'> <button class = 'eventsLearnMore'>Learn More</button> </div> </div> </div> </td>")
+            $('div.eventsHtmlAction').append("<td><div class = 'eventsBox'> <div class = 'eventsUpcomingEvents'> <div class = 'eventsHeading'> <h1>" + heading + "</h1> <h5 style = 'font-weight: 300;'>" + date + "</h5> </div> <hr class = 'eventsHorizLine'> <div class = 'eventsContent'> " + briefDisc + " </div> <div class = 'eventsReveal'> <div class = 'eventsContent'> " + detailedDisc + " <div style = 'height: 15px;'></div><img class = 'eventsImage' src = '"+ image + "'></div> </div> <div class = 'eventsFooter'> <button class = 'eventsLearnMore'>Learn More</button> </div> </div> </div> </td>")
             numEvents += 1;
         });
 
