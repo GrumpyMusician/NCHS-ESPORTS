@@ -10,10 +10,17 @@
     html{
         font-family: 'Ubuntu', sans-serif;
         background-color: rgb(180, 6, 6);
+        overflow: hidden;
     }
 
 
     /*Stuff down here are specific and needed for Current Events*/
+    div.eventsTable {
+        position: relative;
+    }
+    div.eventsHtmlAction {
+        vertical-align: top;
+    }
 
     div.eventsBox {
         float: left;
@@ -66,7 +73,7 @@
         height: 30px;
         width: 100px;
         border: none;
-        border-radius:10px/10px;
+        border-radius: 10px/10px;
         cursor: pointer;
 
         transition-duration: 0.4s;
@@ -76,15 +83,58 @@
         left: 10px;
     }
 
+    button.leftButton {
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        height: 50px;
+        width: 25px;
+        border: none;
+        border-radius: 10px/10px;
+        cursor: pointer;
+
+        transition-duration: 0.4s;
+
+        position: absolute;
+        left: 0%;
+        top: 41%;
+        
+    }
+
+    button.rightButton {
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        height: 50px;
+        width: 25px;
+        border: none;
+        border-radius: 10px/10px;
+        cursor: pointer;
+
+        transition-duration: 0.4s;
+
+        position: absolute;
+        right: 0%;
+        top: 41%;
+
+    }
+
     button:hover {
         box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.05),0 17px 50px 0 rgba(0, 0, 0, 0.032);
     }
+
 </style>
 </head>
 
 
 <body>
-<div class = "htmlAction"></div>
+
+    
+<div class = "eventsTable">
+    <table><tr><div class = "eventsHtmlAction"></div></tr></table>
+
+    <button class = "leftButton">◄</button>
+    <button class = "rightButton">►</button>
+</div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
@@ -95,6 +145,7 @@
     var date = "";
     var briefDisc = "";
     var detailedDisc = "";
+    var numEvents = 0;
 
     jQuery.get('events.txt', function(data) {
         var lines = data.split("\n");
@@ -119,23 +170,48 @@
             });
 
             // Reads the events.txt file, inserts HTML based off of parameters
-            $('div.htmlAction').append("<div class = 'eventsBox'> <div class = 'eventsUpcomingEvents'> <div class = 'eventsHeading'> <h1>" + heading + "</h1> <h5 style = 'font-weight: 300;'>" + date + "</h5> </div> <hr class = 'eventsHorizLine'> <div class = 'eventsContent'> " + briefDisc + " </div> <div class = 'eventsReveal'> <div class = 'eventsContent'> " + detailedDisc + " </div> </div> <div class = 'eventsFooter'> <button class = 'eventsLearnMore'>Learn More</button> </div> </div> </div> ")
+            $('div.eventsHtmlAction').append("<td><div class = 'eventsBox'> <div class = 'eventsUpcomingEvents'> <div class = 'eventsHeading'> <h1>" + heading + "</h1> <h5 style = 'font-weight: 300;'>" + date + "</h5> </div> <hr class = 'eventsHorizLine'> <div class = 'eventsContent'> " + briefDisc + " </div> <div class = 'eventsReveal'> <div class = 'eventsContent'> " + detailedDisc + " </div> </div> <div class = 'eventsFooter'> <button class = 'eventsLearnMore'>Learn More</button> </div> </div> </div> </td>")
+            numEvents += 1;
         });
 
         // Javascript to slide down a discription when the "Learn More" button is pressed.
         // IMPORTANT NOTE: If any more elements get added to the events the whole thing will get messed up
         $(document).ready(function(){
-            $("button.eventsLearnMore").click(function(){
-                if ($(this).parent().parent().children().first().next().next().next().is(":visible")){
-                    $(this).parent().parent().children().first().next().next().next().slideUp("slow", "swing");
-                }
-                else {
-                    $(this).parent().parent().children().first().next().next().next().slideDown("slow", "swing");
+            var viewportWidth = $(window).width();
+            var eventsWidth = numEvents * 422;
+            var eventMove = 1;
+
+            // Hides buttons if viewport fits all events.
+            if (viewportWidth > eventsWidth){
+                $("button.leftButton").hide();
+                $("button.rightButton").hide();
+            }
+
+            $('button.leftButton').click(function(){
+                if (eventMove != 1){
+                    // Prevents user from navigating off the screen
+                    $('div.eventsTable').animate({left: '+=422px'}, 'slow', 'swing');
+                    $('button.leftButton').animate({left: '-=422px'}, 'fast', 'linear');
+                    $('button.rightButton').animate({left: '-=422px'}, 'fast', 'linear');
+                    eventMove -= 1;
                 }
             });
-        });
 
-    })
+            $("button.rightButton").click(function(){
+                if (eventMove != numEvents){
+                    // Prevents user from navigating off the screen
+                    $('div.eventsTable').animate({left: '-=422px'}, 'slow', 'swing');
+                    $('button.leftButton').animate({left: '+=422px'}, 'fast', 'linear');
+                    $('button.rightButton').animate({left: '+=422px'}, 'fast', 'linear');
+                    eventMove += 1;
+                }
+            });
+
+            $("button.eventsLearnMore").click(function(){
+                $(this).parent().parent().children().first().next().next().next().slideToggle("slow", "swing");
+            });
+        });
+    });
 
  
 </script>
